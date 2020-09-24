@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">CrashCatch</string>
+    <string name="null_pointer_exception">NullPointerException</string>
+    <string name="array_index_out_of_bounds_exception">ArrayIndexOutOfBoundsException</string>
+    <string name="index_out_of_bounds_exception">IndexOutOfBoundsException</string>
+    <string name="out_of_memory_error">OutOfMemoryError</string>
+    <string name="called_from_wrong_thread_exception">CalledFromWrongThreadException</string>
+    <string name="bugly_java_crash">BuglyJavaCrash</string>
+    <string name="bugly_anr_crash">BuglyAnrCrash</string>
+    <string name="bugly_native_crash">BuglyNativeCrash</string>
+    <string name="dialog_title1">App发生异常！</string>
+    <string name="dialog_title2">App发生错误！</string>
+    <string name="dialog_content1">异常类型：</string>
+    <string name="dialog_content2">错误类型：</string>
+    <string name="dialog_tip">请尝试重启</string>
+    <string name="dialog_button_positive">确定</string>
+    <string name="text_test">测试文本</string>
+</resources>
