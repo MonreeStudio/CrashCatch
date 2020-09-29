@@ -1,4 +1,4 @@
-package com.monree.com.crashcatch;
+package com.monree.crashcatch;
 
 import android.app.Application;
 import android.content.Context;

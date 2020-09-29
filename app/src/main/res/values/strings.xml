@@ -8,6 +8,7 @@
     <string name="bugly_java_crash">BuglyJavaCrash</string>
     <string name="bugly_anr_crash">BuglyAnrCrash</string>
     <string name="bugly_native_crash">BuglyNativeCrash</string>
+    <string name="jni_test">JNITest</string>
     <string name="dialog_title1">App发生异常！</string>
     <string name="dialog_title2">App发生错误！</string>
     <string name="dialog_content1">异常类型：</string>

@@ -1,4 +1,4 @@
-package com.monree.com.crashcatch;
+package com.monree.crashcatch;
 
 import android.content.DialogInterface;
 import androidx.appcompat.app.AlertDialog;
@@ -21,6 +21,7 @@ public class CrashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_crash);
         Throwable throwable = (Throwable) getIntent().getSerializableExtra("Throwable");
         postDataWithParam(throwable.toString() + Arrays.toString(throwable.getStackTrace()));
+        throwable.printStackTrace();
         showDialog(throwable);
     }
 

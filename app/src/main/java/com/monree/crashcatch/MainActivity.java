@@ -1,4 +1,4 @@
-package com.monree.com.crashcatch;
+package com.monree.crashcatch;
 
 import android.annotation.SuppressLint;
 
@@ -48,6 +48,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btn_exception7.setOnClickListener(this);
         Button btn_exception8 = findViewById(R.id.btn_exception8);
         btn_exception8.setOnClickListener(this);
+        Button btn_test1 = findViewById(R.id.btn_test1);
+        btn_test1.setOnClickListener(this);
     }
 
     private void initTextView() {
@@ -90,7 +92,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 CrashReport.testANRCrash();
                 break;
             case R.id.btn_exception8:
-                CrashReport.closeNativeReport();
+                CrashReport.testNativeCrash();
+                break;
+            case R.id.btn_test1:
+                tv_test.setText(JNI.test());
+                JNI.test2();
+//                try {
+//
+//                }
+//                catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+                break;
             default:
                 break;
         }
