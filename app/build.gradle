@@ -45,11 +45,12 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.2'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     implementation 'com.squareup.okhttp3:okhttp:3.10.0'
     implementation 'com.tencent.bugly:crashreport:3.2.422'
     implementation 'com.tencent.bugly:nativecrashreport:3.7.471'
+    implementation 'com.github.anrwatchdog:anrwatchdog:1.4.0'
 }

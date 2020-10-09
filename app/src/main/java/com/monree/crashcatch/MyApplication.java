@@ -14,8 +14,8 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         context = getApplicationContext();
-        CrashHandler.getInstance().init();
-        CrashReport.initCrashReport(getApplicationContext(), "e7defc4a5a", true);
+        CrashHandler.getInstance().init(context);
+        CrashReport.initCrashReport(context, "e7defc4a5a", true);
         Log.d("CrashReportTest", "CrashReport初始化");
     }
 }
