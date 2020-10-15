@@ -22,6 +22,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     private TextView tv_test;
+    private final String LogTag = "MonreeTestLog";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         initView();
         initANRCacheHelper();
+        Log.d(LogTag, "生命周期：onCreate");
     }
 
     private void initView() {
@@ -55,6 +57,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btn_exception8.setOnClickListener(this);
         Button btn_test1 = findViewById(R.id.btn_test1);
         btn_test1.setOnClickListener(this);
+        Button btn_exception9 = findViewById(R.id.btn_test2);
+        btn_exception9.setOnClickListener(this);
     }
 
     private void initTextView() {
@@ -77,31 +81,37 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (view.getId()){
             case R.id.btn_exception1:
                 //NullPointerException
-                TextView textView = null;
-                textView.setText(getString(R.string.app_name));
-                break;
+                Log.d(LogTag, "NullPointerException");
+//                TextView textView = null;
+//                textView.setText(getString(R.string.app_name));
+                throw new NullPointerException();
+//                break;
             case R.id.btn_exception2:
                 //ArrayIndexOutOfBoundsException
-                int[] testArray = new int[2];
-                Log.i("ExceptionTest",testArray[3] + "");
-                break;
+//                Log.d(LogTag, "ArrayIndexOutOfBoundsException");
+//                int[] testArray = new int[2];
+//                Log.i("ExceptionTest",testArray[3] + "");
+                throw new ArrayIndexOutOfBoundsException();
             case R.id.btn_exception3:
                 //IndexOutOfBoundsException
-                List<String> list = new ArrayList<>();
-                list.add("0");
-                Log.i("ExceptionTest", list.get(1));
-                break;
+//                List<String> list = new ArrayList<>();
+//                list.add("0");
+//                Log.i("ExceptionTest", list.get(1));
+//                break;
+                throw new IndexOutOfBoundsException();
             case R.id.btn_exception4:
                 //OutOfMemoryError
-                List<String> objectList = new ArrayList<>();
-                while (true)
-                    objectList.add(new String());
+//                List<String> objectList = new ArrayList<>();
+//                while (true)
+//                    objectList.add(new String());
+                throw new OutOfMemoryError();
             case R.id.btn_exception5:
                 //CalledFromWrongThreadException
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        tv_test.setText("hhh");
+//                        tv_test.setText("hhh");
+                        throw new RuntimeException();
                     }
                 }).start();
                 break;
@@ -122,6 +132,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 tv_test.setText(JNI.test());
                 JNI.test2();
                 break;
+            case R.id.btn_test2:
+                //JNI_signal_test
+                JNI.test3();
             default:
                 break;
         }

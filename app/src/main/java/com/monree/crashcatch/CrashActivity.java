@@ -29,7 +29,10 @@ public class CrashActivity extends AppCompatActivity {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(getString(R.string.dialog_title1));
         builder.setIcon(R.mipmap.ic_launcher_round);
-        builder.setMessage(getString(R.string.dialog_content1) + e.toString().substring(0, e.toString().indexOf(":")) + "；\n" + getString(R.string.dialog_tip) + "。");
+        if (e.toString().contains(":"))
+            builder.setMessage(getString(R.string.dialog_content1) + e.toString().substring(0, e.toString().indexOf(":")) + "；\n" + getString(R.string.dialog_tip) + "。");
+        else
+            builder.setMessage(getString(R.string.dialog_content1) + e.toString() + ";\n" + getString(R.string.dialog_tip) + "。");
         builder.setPositiveButton(getString(R.string.dialog_button_positive), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {

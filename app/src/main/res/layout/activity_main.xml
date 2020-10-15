@@ -72,6 +72,13 @@
             android:layout_margin="10dp"
             android:textAllCaps="false"
             android:text="@string/jni_test"/>
+        <Button
+            android:id="@+id/btn_test2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:textAllCaps="false"
+            android:text="@string/jni_signal_test"/>
         <TextView
             android:id="@+id/tv_test"
             android:layout_width="match_parent"
