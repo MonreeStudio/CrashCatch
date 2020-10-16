@@ -71,14 +71,21 @@ void exception_handler(int errorCode){
     LOGE("JNI_ERROR, error code %d, cnt %d", errorCode, error_cnt);
 
     // DO SOME CLEAN STAFF HERE...
-        if (mEnv->ExceptionCheck()) {  // 检查JNI调用是否有引发异常
-            mEnv->ExceptionDescribe();
+    if (mEnv->ExceptionCheck()) {  // 检查JNI调用是否有引发异常
+        mEnv->ExceptionDescribe();
         jthrowable jthrowable = mEnv->ExceptionOccurred();
         mEnv->ExceptionClear();        // 清除引发的异常，在Java层不会打印异常的堆栈信息
         mEnv->Throw(jthrowable);
         //env->ThrowNew(env->FindClass("java/lang/Exception"), "哦豁");
         return;
     }
+    LOGE("尝试捕捉1", errorCode, error_cnt);
+    mEnv->ExceptionDescribe();
+    jthrowable jthrowable = mEnv->ExceptionOccurred();
+    mEnv->ExceptionClear();        // 清除引发的异常，在Java层不会打印异常的堆栈信息
+//    mEnv->Throw(jthrowable);
+    mEnv->ThrowNew(mEnv->FindClass("java/lang/Exception"), "哦豁");
+    LOGE("尝试捕捉2", errorCode, error_cnt);
 
     // jump to main function to do exception process
     siglongjmp(JUMP_ANCHOR, 1);
