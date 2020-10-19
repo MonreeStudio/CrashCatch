@@ -41,6 +41,8 @@ extern "C"
 JNIEXPORT void JNICALL
 Java_com_monree_crashcatch_JNI_test2(JNIEnv *env, jclass clazz) {
     jthrowable exc = NULL;
+//    int *p = 0; //空指针
+//    *p = 1;
     jmethodID mid = env->GetStaticMethodID(clazz,"exceptionCallback","()V");
     if (mid != NULL) {
         env->CallStaticVoidMethod(clazz,mid);
@@ -53,8 +55,6 @@ Java_com_monree_crashcatch_JNI_test2(JNIEnv *env, jclass clazz) {
 //        //env->ThrowNew(env->FindClass("java/lang/Exception"), "哦豁");
 //        return;
 //    }
-    int *p = 0; //空指针
-    *p = 1;
     mid = env->GetStaticMethodID(clazz,"normalCallback","()V");
     if (mid != NULL) {
         env->CallStaticVoidMethod(clazz,mid);
@@ -65,28 +65,40 @@ Java_com_monree_crashcatch_JNI_test2(JNIEnv *env, jclass clazz) {
 sigjmp_buf JUMP_ANCHOR;
 volatile sig_atomic_t error_cnt = 0;
 JNIEnv *mEnv;
+JavaVM *jvm;
 
 void exception_handler(int errorCode){
+    JNIEnv *mEnv;
+    jint rs = jvm->AttachCurrentThread(&mEnv, NULL);
+    assert (rs == JNI_OK);
+
     error_cnt += 1;
     LOGE("JNI_ERROR, error code %d, cnt %d", errorCode, error_cnt);
 
     // DO SOME CLEAN STAFF HERE...
-        if (mEnv->ExceptionCheck()) {  // 检查JNI调用是否有引发异常
-            mEnv->ExceptionDescribe();
+    if (mEnv && mEnv->ExceptionCheck()) {  // 检查JNI调用是否有引发异常
+        LOGE("杭杭杭杭杭杭和", errorCode, error_cnt);
+        mEnv->ExceptionDescribe();
         jthrowable jthrowable = mEnv->ExceptionOccurred();
         mEnv->ExceptionClear();        // 清除引发的异常，在Java层不会打印异常的堆栈信息
-        mEnv->Throw(jthrowable);
-        //env->ThrowNew(env->FindClass("java/lang/Exception"), "哦豁");
+//        mEnv->Throw(jthrowable);
+        mEnv->ThrowNew(mEnv->FindClass("java/lang/Exception"), "哦豁");
         return;
+    } else {
+        LOGE("??????", 0, 0);
     }
 
+    jvm->DetachCurrentThread();
     // jump to main function to do exception process
-    siglongjmp(JUMP_ANCHOR, 1);
+    siglongjmp(JUMP_ANCHOR, 0);
 }
 
 extern "C"
 JNIEXPORT void JNICALL
 Java_com_monree_crashcatch_JNI_test3(JNIEnv *env, jclass clazz) {
+    jint rs = env->GetJavaVM(&jvm);
+    assert(rs == JNI_OK);
+
     mEnv = env;
     // 代码跳转锚点
     if (sigsetjmp(JUMP_ANCHOR, 1) != 0) {
@@ -103,6 +115,7 @@ Java_com_monree_crashcatch_JNI_test3(JNIEnv *env, jclass clazz) {
         sigemptyset(&block_mask);
         sigaddset(&block_mask, SIGABRT); // handler处理捕捉到的信号量时，需要阻塞的信号
         sigaddset(&block_mask, SIGSEGV); // handler处理捕捉到的信号量时，需要阻塞的信号
+        sigaddset(&block_mask, SIGSEGV);
 
         sigemptyset(&sigact.sa_mask);
         sigact.sa_flags = 0;

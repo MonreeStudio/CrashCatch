@@ -13,9 +13,9 @@ public class JNI {
 
 
     public static void exceptionCallback() {
-//        Log.i("JNITEST","In Java: invoke exceptionCallback.");
-//        int a = 20 / 0;
-//        Log.i("JNITEST","--->" + a );
+        Log.i("JNITEST","In Java: invoke exceptionCallback.");
+        int a = 20 / 0;
+        Log.i("JNITEST","--->" + a );
 //        throw new NullPointerException();
     }
 
