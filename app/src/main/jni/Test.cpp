@@ -20,16 +20,16 @@ extern "C"
 JNIEXPORT void JNICALL
 Java_com_monree_crashcatch_JNI_test2(JNIEnv *env, jclass clazz) {
     jthrowable exc = NULL;
-    int *p = 0; //空指针
-    *p = 1;
-//    jmethodID mid = env->GetStaticMethodID(clazz,"exceptionCallback","()V");
-//    if (mid != NULL) {
-//        env->CallStaticVoidMethod(clazz,mid);
-//    }
-//    mid = env->GetStaticMethodID(clazz,"normalCallback","()V");
-//    if (mid != NULL) {
-//        env->CallStaticVoidMethod(clazz,mid);
-//    }
+//    int *p = 0; //空指针
+//    *p = 1;
+    jmethodID mid = env->GetStaticMethodID(clazz,"exceptionCallback","()V");
+    if (mid != NULL) {
+        env->CallStaticVoidMethod(clazz,mid);
+    }
+    mid = env->GetStaticMethodID(clazz,"normalCallback","()V");
+    if (mid != NULL) {
+        env->CallStaticVoidMethod(clazz,mid);
+    }
 }
 
 // 定义代码跳转锚点
@@ -60,17 +60,23 @@ void exception_handler(int errorCode){
         // jump to main function to do exception process
 //        mEnv->ThrowNew(mEnv->FindClass("java/lang/Exception"), "哦豁");
         siglongjmp(JUMP_ANCHOR, 0);
-        return;
     } else {
             if(mEnv == nullptr) {
-                LOGE("mEnv为空哦", 0, 0);
+                LOGE("mEnv为空哦", errorCode, error_cnt);
             }
             else {
-                LOGE("莫得办法了", 0, 0);
+                LOGE("莫得办法了", errorCode, error_cnt);
                 jthrowable jthrowable = mEnv->ExceptionOccurred();
-                if(jthrowable == nullptr)
+                if(jthrowable == nullptr) {
                     LOGE("异常为空", errorCode, error_cnt);
-//                mEnv->ThrowNew(mEnv->FindClass("java/lang/Exception"), "哦豁");
+//                    mEnv->ThrowNew(mEnv->FindClass("java/lang/Exception"), "哦豁");
+//                    siglongjmp(JUMP_ANCHOR, 0);
+                    return;
+                } else {
+                    LOGE("异常不为空", errorCode, error_cnt);
+                }
+//                jvm->DetachCurrentThread();
+                siglongjmp(JUMP_ANCHOR, 1);
             }
     }
 
@@ -109,6 +115,4 @@ Java_com_monree_crashcatch_JNI_test3(JNIEnv *env, jclass clazz) {
         sigaction(SIGSEGV, &sigact, nullptr); // 注册要捕捉的信号
         LOGE("信号量检测");
     }
-//    jint value = process(env, jobj, m, n);
-//    return value;
 }

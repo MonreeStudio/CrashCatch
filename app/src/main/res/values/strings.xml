@@ -14,7 +14,7 @@
     <string name="dialog_title2">App发生错误！</string>
     <string name="dialog_content1">异常类型：</string>
     <string name="dialog_content2">错误类型：</string>
-    <string name="dialog_tip">请尝试重启</string>
+    <string name="dialog_tip">具体异常信息已自动上传至服务器，以便开发人员进行分析排查。</string>
     <string name="dialog_button_positive">确定</string>
     <string name="text_test">测试文本</string>
 </resources>
