@@ -3,9 +3,6 @@ package com.monree.crashcatch;
 import android.content.Context;
 import android.content.Intent;
 
-import androidx.annotation.MainThread;
-import androidx.appcompat.app.AlertDialog;
-
 import android.os.Looper;
 import android.util.Log;
 
@@ -41,7 +38,6 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
             ((MainActivity) context).runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-
                     mDefaultUncaughtExceptionHandler.uncaughtException(Thread.currentThread(), throwable);
                     Log.d("CrashReportInfo", "异常捕获3");
                 }

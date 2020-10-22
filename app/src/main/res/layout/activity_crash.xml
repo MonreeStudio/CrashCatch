@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
         android:gravity="center"
-        android:text="游戏发生了崩溃"
+        android:text="@string/dialog_title"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
         android:textColor="@color/white"
@@ -33,14 +33,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="left|center_vertical"
-            android:layout_marginBottom="10dp"
-            android:text="异常信息：\n巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉……" />
+            android:layout_marginBottom="10dp" />
         <TextView
             android:id="@+id/tv_help"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="left|center_vertical"
-            android:text="如需帮助，请联系客服进行咨询。客服QQ："/>
+            android:text="@string/dialog_customer_service_tip"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -57,7 +56,7 @@
             android:layout_height="35dp"
             android:layout_marginEnd="10dp"
             android:layout_weight="1"
-            android:text="关闭"
+            android:text="@string/dialog_button_negative"
             android:background="@drawable/button_negative_corner_background"
             android:textColor="@color/color4399" />
 
@@ -67,7 +66,7 @@
             android:layout_height="35dp"
             android:layout_marginStart="10dp"
             android:layout_weight="1"
-            android:text="重启游戏"
+            android:text="@string/dialog_button_positive"
             android:background="@drawable/button_corner_background"
             android:textColor="#ffffff" />
     </LinearLayout>

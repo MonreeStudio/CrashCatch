@@ -2,12 +2,9 @@ package com.monree.crashcatch;
 
 import android.annotation.SuppressLint;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -17,12 +14,11 @@ import com.github.anrwatchdog.ANRError;
 import com.github.anrwatchdog.ANRWatchDog;
 import com.tencent.bugly.crashreport.CrashReport;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     private TextView tv_test;
-    private final String LogTag = "MonreeTestLog";
+    private final String logTag = "MonreeTestLog";
+    private final String activityName = "MainActivity";
+    private boolean normalFlag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +26,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         initView();
         initANRCacheHelper();
-        Log.d(LogTag, "生命周期：onCreate");
+        Log.d(logTag, activityName + "->生命周期onCreate");
     }
 
     private void initView() {
@@ -69,7 +65,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         new ANRWatchDog().setANRListener(new ANRWatchDog.ANRListener() {
             @Override
             public void onAppNotResponding(ANRError error) {
-                // Handle the error. For example, log it to HockeyApp:
                 Log.d("CrashReportInfo", "发生ANR");
             }
         }).start();
@@ -81,36 +76,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (view.getId()){
             case R.id.btn_exception1:
                 //NullPointerException
-                Log.d(LogTag, "NullPointerException");
-//                TextView textView = null;
-//                textView.setText(getString(R.string.app_name));
+                Log.d(logTag, "NullPointerException");
                 throw new NullPointerException();
-//                break;
             case R.id.btn_exception2:
                 //ArrayIndexOutOfBoundsException
-//                Log.d(LogTag, "ArrayIndexOutOfBoundsException");
-//                int[] testArray = new int[2];
-//                Log.i("ExceptionTest",testArray[3] + "");
                 throw new ArrayIndexOutOfBoundsException();
             case R.id.btn_exception3:
                 //IndexOutOfBoundsException
-//                List<String> list = new ArrayList<>();
-//                list.add("0");
-//                Log.i("ExceptionTest", list.get(1));
-//                break;
                 throw new IndexOutOfBoundsException();
             case R.id.btn_exception4:
                 //OutOfMemoryError
-//                List<String> objectList = new ArrayList<>();
-//                while (true)
-//                    objectList.add(new String());
                 throw new OutOfMemoryError();
             case R.id.btn_exception5:
                 //CalledFromWrongThreadException
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-//                        tv_test.setText("hhh");
                         throw new RuntimeException();
                     }
                 }).start();
@@ -138,5 +119,45 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             default:
                 break;
         }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d(logTag, activityName + "->生命周期onStart");
+        normalFlag = true;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d(logTag, activityName + "->生命周期onResume");
+        if(!normalFlag)
+            finish();
+        normalFlag = false;
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d(logTag, activityName + "->生命周期onPause");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d(logTag, activityName + "->生命周期onStop");
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.d(logTag, activityName + "->生命周期onRestart");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d(logTag, activityName + "->生命周期onDestroy");
     }
 }

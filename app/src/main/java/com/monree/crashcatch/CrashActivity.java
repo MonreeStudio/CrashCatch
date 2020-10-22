@@ -12,8 +12,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.util.Arrays;
 
 import okhttp3.FormBody;
@@ -22,7 +20,8 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class CrashActivity extends AppCompatActivity {
-    private final String LogTag = "MonreeTestLog";
+    private final String logTag = "MonreeTestLog";
+    private final String activityName = "CrashActivity";
 
     private TextView tv_exception;
     private TextView tv_help;
@@ -33,14 +32,13 @@ public class CrashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crash);
-        Log.d(LogTag, "生命周期：onCreate");
+        Log.d(logTag, activityName + "->生命周期onCreate");
         initTextView();
         initButton();
         Throwable throwable = (Throwable) getIntent().getSerializableExtra("Throwable");
         postDataWithParam(throwable.toString() + Arrays.toString(throwable.getStackTrace()));
         throwable.printStackTrace();
         initContent(throwable);
-//        showDialog(throwable);
     }
 
     private void initButton() {
@@ -56,7 +54,9 @@ public class CrashActivity extends AppCompatActivity {
         btn_restart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(CrashActivity.this, MainActivity.class));
+                Intent intent = new Intent(CrashActivity.this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
                 finish();
             }
         });
@@ -73,7 +73,7 @@ public class CrashActivity extends AppCompatActivity {
             tv_exception.setText(getString(R.string.dialog_content1) + e.toString().substring(0, e.toString().indexOf(":")) + "\n" + getString(R.string.dialog_tip));
         else
             tv_exception.setText(getString(R.string.dialog_content1) + e.toString() + "\n" + getString(R.string.dialog_tip));
-
+        tv_help.setText(getString(R.string.dialog_customer_service_tip) + CrashHandlerConfig.supportNumber);
     }
 
     private void showDialog(Throwable e) {
@@ -119,8 +119,33 @@ public class CrashActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d(logTag, activityName + "->生命周期onStart");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d(logTag, activityName + "->生命周期onResume");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d(logTag, activityName + "->生命周期onPause");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d(logTag, activityName + "->生命周期onStop");
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.d(LogTag, "生命周期：onDestroy");
+        Log.d(logTag, activityName + "->生命周期onDestroy");
     }
+
 }
