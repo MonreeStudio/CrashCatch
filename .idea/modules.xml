@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/CrashCatch.iml" filepath="$PROJECT_DIR$/CrashCatch.iml" group="CrashCatch" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="CrashCatch/app" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/mylibrary/mylibrary.iml" filepath="$PROJECT_DIR$/.idea/modules/mylibrary/mylibrary.iml" group="CrashCatch/mylibrary" />
     </modules>
   </component>
 </project>

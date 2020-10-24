@@ -60,24 +60,24 @@ void exception_handler(int errorCode){
         // jump to main function to do exception process
 //        mEnv->ThrowNew(mEnv->FindClass("java/lang/Exception"), "哦豁");
         siglongjmp(JUMP_ANCHOR, 0);
-    } else {
-            if(mEnv == nullptr) {
-                LOGE("mEnv为空哦", errorCode, error_cnt);
-            }
-            else {
-                LOGE("莫得办法了", errorCode, error_cnt);
-                jthrowable jthrowable = mEnv->ExceptionOccurred();
-                if(jthrowable == nullptr) {
-                    LOGE("异常为空", errorCode, error_cnt);
-//                    mEnv->ThrowNew(mEnv->FindClass("java/lang/Exception"), "哦豁");
-//                    siglongjmp(JUMP_ANCHOR, 0);
-                    return;
-                } else {
-                    LOGE("异常不为空", errorCode, error_cnt);
-                }
-//                jvm->DetachCurrentThread();
-                siglongjmp(JUMP_ANCHOR, 1);
-            }
+//    } else {
+//            if(mEnv == nullptr) {
+//                LOGE("mEnv为空哦", errorCode, error_cnt);
+//            }
+//            else {
+//                LOGE("莫得办法了", errorCode, error_cnt);
+//                jthrowable jthrowable = mEnv->ExceptionOccurred();
+//                if(jthrowable == nullptr) {
+//                    LOGE("异常为空", errorCode, error_cnt);
+////                    mEnv->ThrowNew(mEnv->FindClass("java/lang/Exception"), "哦豁");
+////                    siglongjmp(JUMP_ANCHOR, 0);
+//                    return;
+//                } else {
+//                    LOGE("异常不为空", errorCode, error_cnt);
+//                }
+////                jvm->DetachCurrentThread();
+//                siglongjmp(JUMP_ANCHOR, 0);
+//            }
     }
 
     jvm->DetachCurrentThread();
@@ -115,4 +115,10 @@ Java_com_monree_crashcatch_JNI_test3(JNIEnv *env, jclass clazz) {
         sigaction(SIGSEGV, &sigact, nullptr); // 注册要捕捉的信号
         LOGE("信号量检测");
     }
+}
+
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_monree_crashcatch_JNI_initSignal(JNIEnv *env, jclass clazz) {
+    Java_com_monree_crashcatch_JNI_test3(env, clazz);
 }

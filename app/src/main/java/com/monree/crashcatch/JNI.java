@@ -6,6 +6,7 @@ public class JNI {
     public static native String test();
     public static native void test2();
     public static native void test3();
+    public static native void initSignal();
 
     public static void normalCallback() {
         Log.i("JNITEST","In Java: invoke normalCallback.");

@@ -1,9 +1,17 @@
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
+apply plugin: 'bugly'
+
+bugly {
+    appId = 'e7defc4a5a' // 注册时分配的App ID
+    appKey = 'd1e49cb1-d2fb-4113-8a05-40bde7f70e3a' // 注册时分配的App Key
+    debug = true
+    upload = true
+}
 
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "com.monree.crashcatch"
+//        applicationId "com.monree.crashcatch"
         minSdkVersion 22
         targetSdkVersion 28
         versionCode 1
